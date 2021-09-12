@@ -9,7 +9,7 @@ driver: driver.o log.o
 driver.o: driver.c
 	$(GCC) $(CFLAGS) -c driver.c
 
-log.o: log.c log.h
+log.o: log.c
 	$(GCC) $(CFLAGS) -c log.c
 
 

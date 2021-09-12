@@ -14,31 +14,40 @@ int main (int argc, char **argv){
 
 		switch(option){
 
-			case 'a':
-				printf("INFO\n");
-				printf("Plants have arrived.\n");
-				break;
-			case 's':
-				printf("WARN\n");
-				printf("Plants need to be planted ASAP.\n");
-				break;
-			case 'd':
-				printf("ERROR\n");
-				printf("Plants are drying out and need water.\n");
-				break;
-			case 'f':
-				printf("FATAL\n");
-				printf("Failure. Plants are now dead due to lack of care.\n");
-				break;
 			case 'h':
 				fprintf(stderr, "usage: %s -(a/s/d/f) -t <filename>\n", argv[0]);
 				break;
+			//case 't':
 			
 			default:
 				fprintf(stderr, "errno: %i\n", errno);
-				break;
+				exit(-1);;
 		}
 	}
+
+	if(optind < argc){
+		
+		while (optind < argc){
+			filename  = argv[optind++];
+		}
+	}
+	else {
+
+		filename = "messages.log";
+	}
+
+	addmsg("INFO", "Your plants have been delivered.");
+	sleep(3);
+	addmsg("INFO", "Plant must go in the ground within 3 days.");
+	sleep(3);
+	addmsg("WARN", "Plant are dry, water NOW!");
+	sleep(2);
+	addmsg("ERROR", "Plant are dying. Water IMMEDIATELY!");
+	sleep(1);
+	addmsg("FATAL", "Your plants have died.");
+	sleep(10);
+	addmsg("INFO", "New plants have been ordered.");
+
 
 	return 0;
 }
