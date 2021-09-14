@@ -1,9 +1,7 @@
-18:9:3	INFO: Plants have been delivered
-18:9:7	INFO: Plants need to be planted within 3 days
-18:9:11	WARNING: Plant need watering, take action NOW
-18:9:15	ERROR: Plants are drying, water IMMEDIATELY
-18:9:19	FATAL: Plants have died
-18:9:23	INFO: New plants have been delivered
-18:9:27	WARNING: Please pick up plants ASAP
-18:9:31	ERROR: Plants need to  be picked up IMMEDIATELY
-18:9:35	FATAL: Plants are no longer available
+22:38:30	INFO: Plants have been delivered
+22:38:31	INFO: Plants need to be planted within 3 days
+22:38:32	WARNING: Plant need watering, take action NOW
+22:38:33	ERROR: Plants are dying, water IMMEDIATELY
+22:38:34	INFO: New plants have been delivered
+22:38:35	WARNING: Please pick up plants ASAP
+22:38:36	ERROR: Plants need to  be picked up IMMEDIATELY

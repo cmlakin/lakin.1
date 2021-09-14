@@ -5,6 +5,9 @@
 #include <time.h>
 #include "log.h"
 
+//static char* filename;
+//static int sec;
+
 
 int main(int argc, char  **argv){
 
@@ -46,31 +49,22 @@ int main(int argc, char  **argv){
 	}
 	  	
 	// function calls
-	addmsg('I', "INFO: Plants have been delivered");
-	sleep(sec);
-	addmsg('I', "INFO: Plants need to be planted within 3 days");
-	sleep(sec);
-	addmsg('W', "WARNING: Plant need watering, take action NOW");
-	sleep(sec);
-	addmsg('E', "ERROR: Plants are drying, water IMMEDIATELY");
-//	sleep(sec);
-//	addmsg('F', "FATAL: Plants have died");
-//	sleep(sec);
-//	addmsg('I', "INFO: New plants have been delivered");
-//	sleep(sec);
-//	addmsg('W', "WARNING: Please pick up plants ASAP");
-//	sleep(sec);
-//	addmsg('E', "ERROR: Plants need to  be picked up IMMEDIATELY");
-//	sleep(sec);
-//	addmsg('F', "FATAL: Plants are no longer available");
+	addmsg('I', "INFO: Plants have been delivered", filename, sec);
+	addmsg('I', "INFO: Plants need to be planted within 3 days", filename, sec);
+	addmsg('W', "WARNING: Plant need watering, take action NOW", filename, sec);
+	addmsg('E', "ERROR: Plants are dying, water IMMEDIATELY", filename, sec);
+//	addmsg('F', "FATAL: Plants have died", filename, sec);
+	addmsg('I', "INFO: New plants have been delivered", filename, sec);
+	addmsg('W', "WARNING: Please pick up plants ASAP", filename, sec);
+	addmsg('E', "ERROR: Plants need to  be picked up IMMEDIATELY", filename, sec);
+	addmsg('F', "FATAL: Plants are no longer available", filename, sec);
 
-//	printlog();
-//	savelog(filename, sec);
-//	clearlog();
-//	printlog();
+	savelog(filename, sec);
 
 	g = getlog();
 	printf("getlog()= %s\n", g);
+
+	clearlog();
 
 	return 0;
 }

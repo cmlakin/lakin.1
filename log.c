@@ -7,17 +7,23 @@
 #include <string.h>
 #include <time.h>
 #include <sys/time.h>
+#include <errno.h>
 #include "log.h"
+
+//extern char* filename;
+//extern int sec;
 
 static data_t* headptr = NULL;
 static data_t* tailptr = NULL;
 
 // addmsg working
-int addmsg(const char type, const char* msg){
+// fatal message error working
+int addmsg(const char type, const char* msg, char* filename, int sec){
 	int msgsize =  0;
 
 	if (type == 'F'){
-		return -1;
+		savelog(filename, sec);
+		exit(-1);
 	}
 
 	if(type == 'I' || type == 'W' || type == 'E'){
@@ -26,14 +32,9 @@ int addmsg(const char type, const char* msg){
 		newnode->type = type; // set type of struct
 		msgsize = strlen(msg);
 		newnode->string = malloc(msgsize);
+
 		strncpy(newnode->string, msg, msgsize);
 		newnode->next = NULL;
-
-// cannot get list to print up to fatal msg entered
-/*		if(type == 'F'){
-			printf("Fatal msg entered\n");
-			exit(-1);
-		}*/
 
 		if(headptr == NULL){
 			headptr = newnode;
@@ -43,15 +44,10 @@ int addmsg(const char type, const char* msg){
 			tailptr->next = newnode;
 			tailptr = newnode;
 		}
-
 		return 0;
 	}
-// cannot get list to print up to fata msg entered
-/*	else if(type == 'F'){
-		printf("Fatal msg enterd.");
-		exit(-1);
-	}*/
 	else{
+		perror("Unknown type");
 		return -1;
 	}
 }
@@ -68,23 +64,27 @@ void clearlog(void){
 	}
 }
 
+// getlog working
 char* getlog(void){
-	int sum = 0;
-	int offset = 0;
-	size_t stringlen;
-	char* bigstring = NULL;
+	int sum = 0; // holds running total of string lengths
+	int offset = 0; // holds position of where last string left off
+	size_t stringlen; // string length
+	char* bigstring = NULL; // pointer to hold concatenated string
 	data_t* tp = headptr;
 
+	//concatenates nodes/msgs into one big string
 	while(tp != NULL){
 		stringlen  = strlen(tp->string);
 		sum += stringlen;
-		bigstring = realloc(bigstring, sum);
-		strncpy(bigstring + offset, tp->string, stringlen);
+		// must include offset or it will replace previous addittion
+		bigstring = realloc(bigstring, (sum + offset));
+		strncat(bigstring, tp->string, stringlen);
 		tp = tp->next;
 		offset += sum;
 	}
-//	bigstring = realloc(bigstring, sum + 1);
-//	bigstring[sum + 1] = 0x00; // assign null
+	// allocates enough memory to add a null pointer to the end
+	bigstring = realloc(bigstring, sum + 1);
+	bigstring[sum + 1] = 0x00; // assign null
 
 	return bigstring;
 }
