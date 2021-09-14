@@ -5,59 +5,75 @@
 #include <time.h>
 #include "log.h"
 
-int main (int argc, char **argv){
 
-	int option; // get command line option
-	char *filename;  // pointer for filename from the command line
-	int max = 5; // max seconds between messages being added to log
-	int min = 1; // max seconds between messages being added to log
-	int sec = 1; // initial value for seconds between addittions to log
+int main(int argc, char  **argv){
+
+	int option; // parse command line arguements
+	int max =5, min = 1; // variables for random number
+	int sec = 1; // value for sleeping between messages
 	srand(time(0));
+	char* filename; // filename pointer
+	char* g; // pointer for getlog function return
 
-	// set up getopt() cases
-/*	while ((option =  getopt(argc, argv, "ht:")) !=-1){
+	// parse command line using getopt()
+	while((option = getopt(argc, argv, "ht")) != -1){
 
 		switch(option){
 
 			case 'h':
 				fprintf(stderr, "usage: %s -t <filename>\n", argv[0]);
-				break;
+				exit(1);
 			case 't':
-				sec = (rand() % (max - min +1) + min); 
+				sec = (rand() % (max - min + 1) + min);
+				printf("sec = %i\n", sec);
 				break;
 			default:
-				fprintf(stderr, "errno: %i\n", errno);
-				exit(-1);
+				fprintf(stderr, "ernno: %i\n", errno);
 		}
 	}
-*/
-/*	if(optind < argc){
+	
+	// get filename from command  line, if none assign a filename
+	if(optind < argc){
 		
-		while (optind < argc){
-			filename  = argv[optind++];
+		while(optind < argc){
+
+			filename  = argv[optind];
+			optind++;
 		}
-		fprintf("filename: %c\n", filename);
 	}
-	else {
-
+	else{
 		filename = "messages.log";
+	}
+	  	
+	// function calls
+	addmsg('I', "INFO: Plants have been delivered");
+	sleep(sec);
+	addmsg('I', "INFO: Plants need to be planted within 3 days");
+	sleep(sec);
+	addmsg('W', "WARNING: Plant need watering, take action NOW");
+	sleep(sec);
+	addmsg('E', "ERROR: Plants are drying, water IMMEDIATELY");
+//	sleep(sec);
+//	addmsg('F', "FATAL: Plants have died");
+//	sleep(sec);
+//	addmsg('I', "INFO: New plants have been delivered");
+//	sleep(sec);
+//	addmsg('W', "WARNING: Please pick up plants ASAP");
+//	sleep(sec);
+//	addmsg('E', "ERROR: Plants need to  be picked up IMMEDIATELY");
+//	sleep(sec);
+//	addmsg('F', "FATAL: Plants are no longer available");
 
-		fprintf("filename: %c\n", filename);
-	}*/
+//	printlog();
+//	savelog(filename, sec);
+//	clearlog();
+//	printlog();
 
-	addmsg('I', "INFO: Your plants have been delivered.");
-	sleep(sec);
-	addmsg('I', "INFO: Plant must go in the ground within 3 days.");
-	sleep(sec);
-	addmsg('W', "WARN: Plant are dry, water NOW!");
-	sleep(sec);
-	addmsg('E', "ERROR: Plant are dying. Water IMMEDIATELY!");
-	sleep(sec);
-	addmsg('F', "FATAL: Your plants have died.");
-	sleep(sec);
-	addmsg('I', "INFO: New plants have been ordered.");
-
-	printll();
+	g = getlog();
+	printf("getlog()= %s\n", g);
 
 	return 0;
 }
+
+
+
